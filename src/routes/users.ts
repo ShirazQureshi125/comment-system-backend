@@ -8,8 +8,8 @@ import {
 
 const router = Router();
 
-router.post('/user-register', createUser);
-router.post('/login-user', loginUser);
-router.get('/get-user', getUser);
+router.post('/register', createUser);
+router.post('/login', loginUser);
+router.get('/users', getUser);
 
 export default router;

@@ -3,8 +3,7 @@ import { Comment } from "../models/comments";
 import { RequestHandler } from "express";
 
 import { Post } from "../models/posts";
-import { Reply } from "../models/replies";
-import { Nest } from "../models/nesties";
+
 
 export const createPost: RequestHandler = async (req, res) => {
   try {

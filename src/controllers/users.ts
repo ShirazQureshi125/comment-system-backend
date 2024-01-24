@@ -1,14 +1,11 @@
-import { User } from './../models/users';
+import { User } from "./../models/users";
 import { RequestHandler } from "express";
-import { Comment } from '../models/comments';
-
+import { Comment } from "../models/comments";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Post } from '../models/posts';
-import { Reply } from '../models/replies';
-import { Nest } from '../models/nesties';
+import { Post } from "../models/posts";
 
-export const createUser: RequestHandler =async (req, res) => {
+export const createUser: RequestHandler = async (req, res) => {
   try {
     const { userName, email, password } = req.body;
     const existingUser = await User.findOne({ where: { email } });
@@ -27,11 +24,10 @@ export const createUser: RequestHandler =async (req, res) => {
     res
       .status(200)
       .json({ message: "User registered successfully", user: newUser });
-    } catch (error: any) {
-      console.error("Error creating user:", error.message);
-      res.status(500).json(error.message);
-    }
-    
+  } catch (error: any) {
+    console.error("Error creating user:", error.message);
+    res.status(500).json(error.message);
+  }
 };
 
 export const loginUser: RequestHandler = async (req, res) => {
@@ -60,20 +56,19 @@ export const loginUser: RequestHandler = async (req, res) => {
   }
 };
 
-
 export const getUser: RequestHandler = async (req, res) => {
   try {
     const users = await User.findAll({
-      include:[
+      include: [
         {
-          model:Post,
-          as:'posts',
-          attributes:["title","content" ],
-          include:[
+          model: Post,
+          as: "posts",
+          attributes: ["title", "content"],
+          include: [
             {
-              model:Comment,
-              as:'comments',
-         /*      include:[
+              model: Comment,
+              as: "comments",
+              /*      include:[
                 {
                   model:Reply,
                   as:'replies',
@@ -84,11 +79,10 @@ export const getUser: RequestHandler = async (req, res) => {
                    }]
                 }
               ] */
-
-            }
-          ]
-        }
-      ]
+            },
+          ],
+        },
+      ],
     });
     res.status(200).json(users);
   } catch (error) {
@@ -96,6 +90,3 @@ export const getUser: RequestHandler = async (req, res) => {
     throw error;
   }
 };
-
-
-
