@@ -29,6 +29,9 @@ export class User extends Model<UserAttributes> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    validate:{
+      isEmail: true,
+    }
   })
   email!: string;
 

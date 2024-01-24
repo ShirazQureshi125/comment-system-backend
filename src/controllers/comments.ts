@@ -12,20 +12,7 @@ export const postComment: RequestHandler = async (req, res) => {
   if (!existingPost) {
     return res.status(400).json({ error: "Invalid Post Id! Post does not exist" });
   }
-    // Comment validation
-   /*  if (replyId) {
-      const existingComment = await Comment.findOne( {
-        where: {
-          postId: existingPost.postId,
-        },
-      });
-
-      if (!existingComment) {
-        return res.status(400).json({
-          error: "Invalid Comment Id or Post Id! Comment does not exist or is not associated with the specified Post",
-        });
-      }
-    } */
+   
     if (replyId) {
       const existingComment = await Comment.findByPk(replyId);
 
@@ -60,14 +47,7 @@ export const commentReply: RequestHandler = async (req, res) => {
   }
 };
 // Recursive function to get replies for a comment
-const countTopLevelComments = async (): Promise<number> => {
-  const countResult = await Comment.count({
-    where: {
-      replyId: null,
-    },
-  });
-  return countResult;
-};
+
 
 // Recursive function to get replies for a comment
 const getReplies = async (
@@ -91,7 +71,7 @@ const getReplies = async (
         model: Comment,
         as: 'replies',
         include: [
-          // Continue nesting if needed
+          
         ],
       },
     ],
@@ -140,25 +120,4 @@ export const getComment: RequestHandler = async (req, res) => {
 };
 
 
-  /* export const getComment: RequestHandler = async (req, res) => {
-    try {
-      const comments = await Comment.findAll({
-        where: {
-          replyId:null ,
-        },
-        include: [
-          {
-            model: Comment,
-            as: 'replies',
-          },
-        ],
-     
-      
-       
-      });
-      res.json(comments);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  }; */
+ 

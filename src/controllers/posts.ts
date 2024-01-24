@@ -26,58 +26,13 @@ export const getPost: RequestHandler = async (req, res) => {
         },
         {
           model: Comment,
-          as: "comments",
+          as: "replies",
           attributes: ["content", "postId", "commentId"],
-         /*  include: [
-            {
-              model: Reply,
-              as: "replies",
-              attributes: ["content", "replyId"],
-              include: [
-                {
-                  model: Nest,
-                  as: "nestedReply",
-                  attributes: ["content", "replyId"],
-                },
-              ],
-            },
-          ], */
+       
         },
       ],
     });
-    // posts.forEach((post) => {
-    //   console.log(typeof post.dataValues.comments.);
-    // });
-    // if (!posts || posts.length === 0) {
-    //   console.log("No posts found.");
-    // } else {
-    //   // console.log("Retrieved comments:", posts);
-
-    //   posts.forEach((post) => {
-    //     console.log(post.dataValues);
-    //   });
-    // }
-    // Assuming you have retrieved posts from the database
-    /* if (!posts || posts.length === 0) {
-  console.log("No posts found.");
-} else {
-  console.log("Retrieved posts:");
-
-  const PostModel = posts[0].constructor as typeof Post;
-  const attributes = PostModel.rawAttributes;
-
-  posts.forEach((post) => {
-    Object.keys(attributes).forEach((attributeName) => {
-      const value = post.get(attributeName);
-      const dataType = attributes[attributeName].type;
-
-      console.log(`${attributeName}: ${value} (${dataType})`);
-    });
-
-    console.log("------");
-  });
-} */
-
+  
     res.json(posts);
   } catch (error) {
     console.error(error);
