@@ -1,13 +1,9 @@
 
 
 import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
-import { Post } from "./posts";
-interface UserAttributes {
-  userId?: string;
-  userName: string;
-  email: string;
-  password: string;
-}
+import { Post } from "../post/post.model";
+import { UserAttributes } from "../../common/interfaces/user.interfaces";
+
 @Table({
   tableName: "users",
 })
@@ -23,12 +19,14 @@ export class User extends Model<UserAttributes> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    unique: true,
   })
   userName!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    unique: true,
     validate:{
       isEmail: true,
     }
@@ -36,8 +34,13 @@ export class User extends Model<UserAttributes> {
   email!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(64),
     allowNull: false,
+    validate:{
+      is:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      max:20,
+      min:8,
+    }
   })
   password!: string;
 

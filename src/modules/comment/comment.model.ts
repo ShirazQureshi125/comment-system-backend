@@ -1,13 +1,14 @@
-
-
-import { Table, Model, Column, DataType, ForeignKey, BelongsTo, HasMany } from "sequelize-typescript";
-
-interface CommentAttributes {
-  commentId?: string;
-  content: string;
-  replyId?: string | null;
-  postId: string;
-}
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+  HasMany,
+} from "sequelize-typescript";
+import { CommentAttributes } from "../../common/interfaces/comment.interfaces";
+import { Post } from "../post/post.model";
 
 @Table({
   tableName: "comments",
@@ -22,8 +23,12 @@ export class Comment extends Model<CommentAttributes> {
   commentId!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [1, 500],
+    },
   })
   content!: string;
 
@@ -43,9 +48,13 @@ export class Comment extends Model<CommentAttributes> {
   })
   postId!: string;
 
-  @BelongsTo(() => Comment, { foreignKey: 'replyId', as: 'replier' })
+
+  @BelongsTo(() => Post, { foreignKey: "postId", as: "author" })
+  author!: Post;
+  
+  @BelongsTo(() => Comment, { foreignKey: "replyId", as: "replier" })
   replier!: Comment;
 
-  @HasMany(() => Comment, { foreignKey: 'replyId', as: 'replies' })
+  @HasMany(() => Comment, { foreignKey: "replyId", as: "replies" })
   replies!: Comment[];
 }

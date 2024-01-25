@@ -1,13 +1,9 @@
 
 import { Table, Model, Column, DataType, ForeignKey, BelongsTo, HasMany } from "sequelize-typescript";
-import { User } from "./users";
-import { Comment } from "./comments";
-interface PostAttributes {
-  postId?:string;
-  title:string;
-  content:string;
-  userId:string;
-}
+import { User } from "../user/user.model";
+import { Comment } from "../comment/comment.model";
+import { PostAttributes } from "../../common/interfaces/post.interfaces";
+
 @Table({
   tableName: "posts",
 })
@@ -23,12 +19,20 @@ export class Post extends Model<PostAttributes> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [1, 255], 
+    },
   })
   title!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT, 
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [1, 500],
+    }
   })
   content!: string;
 
@@ -43,6 +47,6 @@ export class Post extends Model<PostAttributes> {
   user!: User;
 
   // Define association with Comment model
-  @HasMany(() => Comment, { foreignKey: 'postId', as: 'comments' })
-  comments!: Comment[];
+  @HasMany(() => Comment, { foreignKey: 'postId', as: 'replies' })
+  replies!: Comment[];
 }

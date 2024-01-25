@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import {  getComment, postComment } from "../controllers/comments";
+import {  getComment, postComment } from "./comment.controller";
 
 const router = Router();
 

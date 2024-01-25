@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
-import { User } from "../models/users";
-import { Post } from "../models/posts";
-import { Comment } from "../models/comments";
+import { User } from "../modules/user/user.model";
+import { Post } from "../modules/post/post.model";
+import { Comment } from "../modules/comment/comment.model";
 
 const connection = new Sequelize({
   dialect: "mysql",

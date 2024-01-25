@@ -4,7 +4,7 @@ import {
   createPost,
   getPost,
   
-} from "../controllers/posts";
+} from "./post.controller";
 
 const router = Router();
 

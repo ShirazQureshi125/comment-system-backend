@@ -1,7 +1,7 @@
 import express from "express";
-import userRoutes from "./src/routes/users";
-import postRoutes from "./src/routes/posts";
-import commentRoutes from "./src/routes/comments";
+import userRoutes from "./src/modules/user/user.route";
+import postRoutes from "./src/modules/post/post.route";
+import commentRoutes from "./src/modules/comment/comment.route";
 import connection from "./src/db/config";
 const app = express();
 
